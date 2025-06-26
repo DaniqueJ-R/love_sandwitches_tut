@@ -22,7 +22,23 @@ def get_sales_data():
     print("Example: 23,83,13,24,53,3,\n")
 
     data_string = input("Enter data here: ")
-    print(f"The data provided is: {data_string}")
+    
+    sales_data = data_string.split(",")
+    validate_data(sales_data)
+
+def validate_data(values):
+    """
+    Validates the data entered by the user to be 6 integers only. Raises ValueError if data is invalid.
+    """
+    try:
+        if len(values) != 6:
+            raise ValueError(
+                f"You provided {len(values)}, but 6 values are needed"
+            )
+    except ValueError as e:
+        print(f"Invalid date: {e}, please check your date and try again.")
+
+
 
 
 get_sales_data()
