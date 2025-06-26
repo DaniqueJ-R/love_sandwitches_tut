@@ -31,6 +31,7 @@ def validate_data(values):
     Validates the data entered by the user to be 6 integers only. Raises ValueError if data is invalid.
     """
     try:
+        [int(values) for values in values]
         if len(values) != 6:
             raise ValueError(
                 f"You provided {len(values)}, but 6 values are needed"
