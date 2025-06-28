@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -36,7 +37,8 @@ def get_sales_data():
 
 def validate_data(values):
     """
-    Validates the data entered by the user to be 6 integers only. Raises ValueError if data is invalid.
+    Validates the data entered by the user to be 6 integers only. 
+    Raises ValueError if data is invalid.
     """
     try:
         [int(values) for values in values]
@@ -60,9 +62,30 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
 
+def calculate_surplus_data(sales_row):
+    """
+    Calculate the surplus data based on the sales data fom the sheet. 
+    Surplus is the difference between the stock and sales.
+    e.g. stock (8) - sales (10) = surplus (-2)
+    """
+    print("Calculating surplus data...\n")
+    stock_data = SHEET.worksheet("stock").get_all_values()
+    # pprint(stock_data)
+    stock_row = stock_data[-1]
+    print(stock_row)
 
 
-data = get_sales_data()
-sales_data = [int(num) for num in data]
 
-update_sales_worksheet(sales_data)
+def main():
+    """"
+    Runs all main funcitons
+    """
+    data = get_sales_data()
+    sales_data = [int(num) for num in data]
+    update_sales_worksheet(sales_data)
+    calculate_surplus_data(sales_data)
+
+
+
+print("Welcome to Love Sandwitches Data Automation!")
+main()
