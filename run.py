@@ -52,15 +52,37 @@ def validate_data(values):
     
     return True
 
+#Refactored the update_sales_worksheet and update_surplus_worksheet functions into one function called update_worksheet
+# The original functions were commented out to avoid confusion, but can be uncommented if needed.
 
-def update_sales_worksheet(data):
+# def update_sales_worksheet(data):
+#     """
+#     Updates the sales worksheet with the data provided.
+#     """
+#     print("Updating sales worksheet...\n")
+#     sales_worksheet = SHEET.worksheet("sales")
+#     sales_worksheet.append_row(data)
+#     print("Sales worksheet updated successfully.\n")
+        
+# def update_surplus_worksheet(data):
+#     """
+#     Updates the surplus worksheet with the data from calculate_surplus.
+#     """
+#     print("Updating surplus worksheet...\n")
+#     surplus_worksheet = SHEET.worksheet("surplus")
+#     surplus_worksheet.append_row(data)
+#     print("Surplus worksheet updated successfully.\n")
+
+def update_worksheet(data, worksheet_name):
     """
-    Updates the sales worksheet with the data provided.
+    Recives a list of integers to be added to a worksheet.
+    Updates the relevant worksheet with the relevant lists.
     """
-    print("Updating sales worksheet...\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("Sales worksheet updated successfully.\n")
+    print(f"Updating {worksheet_name} worksheets...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet_name)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet_name} worksheet updated successfully.\n")
+
 
 def calculate_surplus_data(sales_row):
     """
@@ -79,16 +101,6 @@ def calculate_surplus_data(sales_row):
         surplus_data.append(surplus)
     
     return surplus_data
-    
-def update_surplus_worksheet(data):
-    """
-    Updates the surplus worksheet with the data from calculate_surplus.
-    """
-    print("Updating surplus worksheet...\n")
-    surplus_worksheet = SHEET.worksheet("surplus")
-    surplus_worksheet.append_row(data)
-    print("Surplus worksheet updated successfully.\n")
-
 
 def main():
     """"
@@ -96,9 +108,9 @@ def main():
     """
     data = get_sales_data()
     sales_data = [int(num) for num in data] # convert sales data sting to integers from get_sales_data() 
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
-    update_surplus_worksheet(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
 
 
 
